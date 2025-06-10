@@ -54,8 +54,8 @@ void	*philosopher(void *args);
 void	*monitor(void *args);
 
 void	print_action(t_philo *philo, char *action, char *color);
-void	take_left_fork(t_philo *philo);
-void	take_right_fork(t_philo *philo);
+void	left_fork(t_philo *philo);
+void	right_fork(t_philo *philo);
 
 void	destroy(t_program *program, int i);
 int		setup(char **argv, t_program *program);
@@ -70,6 +70,6 @@ long	get_current_time(void);
 int		ft_usleep(int time_in_ms);
 float	get_converted_time(long start);
 int		is_number(const char *nptr);
-int		is_dead(t_program *program);
+int		do_be_dead(t_program *program);
 
 #endif

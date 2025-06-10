@@ -39,7 +39,7 @@ void	set_dead(t_program *program)
 	pthread_mutex_unlock(program->dead_mutex);
 }
 
-int	is_dead(t_program *program)
+int	do_be_dead(t_program *program)
 {
 	int	dead;
 

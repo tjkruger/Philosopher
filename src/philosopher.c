@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/09 13:52:24 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:30:28 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,25 @@ void	think(t_philo *philo)
 	print_action(philo, "is thinking", COLOR_CYAN);
 	if (philo->id % 2 == 0)
 	{
-		take_left_fork(philo);
-		take_right_fork(philo);
+		left_fork(philo);
+		right_fork(philo);
 	}
 	else
 	{
-		take_right_fork(philo);
-		take_left_fork(philo);
+		right_fork(philo);
+		left_fork(philo);
 	}
 }
 
 void	philo_loop(t_philo *philo)
 {
-	while (is_dead(philo->program) == 0)
+	while (do_be_dead(philo->program) == 0)
 	{
 		think(philo);
-		if (is_dead(philo->program) == 1)
+		if (do_be_dead(philo->program) == 1)
 			break ;
 		eat(philo);
-		if (is_dead(philo->program) == 1)
+		if (do_be_dead(philo->program) == 1)
 			break ;
 		if (philo->program->must_eat_count != -1
 			&& philo->eat_count >= philo->program->must_eat_count)

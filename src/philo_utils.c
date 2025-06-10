@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/09 13:52:30 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:30:20 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_action(t_philo *philo, char *action, char *color)
 {
 	pthread_mutex_lock(philo->program->print_mutex);
-	if (is_dead(philo->program) == 1)
+	if (do_be_dead(philo->program) == 1)
 	{
 		pthread_mutex_unlock(philo->program->print_mutex);
 		return ;
@@ -26,13 +26,13 @@ void	print_action(t_philo *philo, char *action, char *color)
 	pthread_mutex_unlock(philo->program->print_mutex);
 }
 
-void	take_left_fork(t_philo *philo)
+void	left_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->program->forks[philo->id]);
 	print_action(philo, "has taken a fork", COLOR_GREEN);
 }
 
-void	take_right_fork(t_philo *philo)
+void	right_fork(t_philo *philo)
 {
 	if (philo->id == philo->program->number_of_philosophers - 1)
 		pthread_mutex_lock(&philo->program->forks[0]);
