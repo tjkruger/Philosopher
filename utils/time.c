@@ -6,13 +6,12 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:51:50 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/09 13:52:04 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:38:52 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-// returns current time in ms
 long	get_current_time(void)
 {
 	struct timeval	time;
