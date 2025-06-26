@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:26:42 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/12 12:28:51 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:22:38 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,20 @@ void	think_while_grabbing_fork(t_philo *philo)
 		right_fork(philo);
 		left_fork(philo);
 	}
+}
+
+int	spawn_philo_fr(t_program *program, pthread_t *threads, long time)
+{
+	while (program->current_philos < program->number_of_philosophers
+		&& program->current_philos < PTHREAD_THREADS_MAX - 1)
+	{
+		setup_philo_struct(&program->philos[program->current_philos],
+			time, program);
+		if (pthread_create(&threads[program->current_philos],
+				NULL, &philosopher,
+				&program->philos[program->current_philos]) != 0)
+			return (1);
+		program->current_philos++;
+	}
+	return (0);
 }

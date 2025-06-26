@@ -64,6 +64,7 @@ int		input_invalid(char argc, char **argv);
 int		make_dead_mutex(t_program *program);
 
 void	unlock_after_end(t_philo *philo);
+void	setup_philo_struct(t_philo *philo, long time, t_program *program);
 
 int		ft_atoi(const char *nptr);
 long	get_current_time(void);
@@ -75,5 +76,6 @@ int		do_be_dead(t_program *program);
 void	think_while_grabbing_fork(t_philo *philo);
 void	eat_and_whash_dishes(t_philo *philo);
 void	sleep_philo(t_philo *philo);
+int		spawn_philo_fr(t_program *program, pthread_t *threads, long time);
 
 #endif

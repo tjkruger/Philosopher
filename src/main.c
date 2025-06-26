@@ -51,31 +51,21 @@ void	setup_philo_struct(t_philo *philo, long time, t_program *program)
 	philo->eat_count = 0;
 }
 
-// returns 1 if anything fails
-// returns 0 if all worked
+
+
 int	spawn_philos(t_program *program)
 {
 	pthread_t	threads[PTHREAD_THREADS_MAX - 1];
 	pthread_t	monitor_thread;
 	long		time;
 
-	monitor_thread = 0;
 	program->current_philos = 0;
 	program->philos = malloc(sizeof(t_philo) * program->number_of_philosophers);
 	if (!program->philos)
 		return (1);
 	time = get_current_time();
-	while (program->current_philos < program->number_of_philosophers
-		&& program->current_philos < PTHREAD_THREADS_MAX - 1)
-	{
-		setup_philo_struct(&program->philos[program->current_philos],
-			time, program);
-		if (pthread_create(&threads[program->current_philos],
-				NULL, &philosopher, &program->philos[program->current_philos])
-			!= 0)
-			break ;
-		program->current_philos++;
-	}
+	if (spawn_philo_fr(program, threads, time) != 0)
+		return (1);
 	pthread_create(&monitor_thread, NULL, &monitor, program);
 	return (join_threads(program, threads, monitor_thread,
 			program->current_philos));
