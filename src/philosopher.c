@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/10 15:30:28 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:28:43 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,52 +15,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	sleep_philo(t_philo *philo)
-{
-	print_action(philo, "is sleeping", COLOR_BLUE);
-	ft_usleep(philo->program->time_to_sleep);
-}
-
-void	eat(t_philo *philo)
-{
-	print_action(philo, "is eating", COLOR_MAGENTA);
-	ft_usleep(philo->program->time_to_eat);
-	pthread_mutex_unlock(&philo->program->forks[philo->id]);
-	if (philo->id == philo->program->number_of_philosophers - 1)
-		pthread_mutex_unlock(&philo->program->forks[0]);
-	else
-		pthread_mutex_unlock(&philo->program->forks[philo->id + 1]);
-	pthread_mutex_lock(&philo->last_eat_mutex);
-	philo->last_eat = get_current_time();
-	pthread_mutex_unlock(&philo->last_eat_mutex);
-	pthread_mutex_lock(&philo->eat_count_mutex);
-	philo->eat_count++;
-	pthread_mutex_unlock(&philo->eat_count_mutex);
-}
-
-void	think(t_philo *philo)
-{
-	print_action(philo, "is thinking", COLOR_CYAN);
-	if (philo->id % 2 == 0)
-	{
-		left_fork(philo);
-		right_fork(philo);
-	}
-	else
-	{
-		right_fork(philo);
-		left_fork(philo);
-	}
-}
-
 void	philo_loop(t_philo *philo)
 {
 	while (do_be_dead(philo->program) == 0)
 	{
-		think(philo);
+		think_while_grabbing_fork(philo);
 		if (do_be_dead(philo->program) == 1)
 			break ;
-		eat(philo);
+		eat_and_whash_dishes(philo);
 		if (do_be_dead(philo->program) == 1)
 			break ;
 		if (philo->program->must_eat_count != -1

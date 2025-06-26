@@ -72,4 +72,8 @@ float	get_converted_time(long start);
 int		is_number(const char *nptr);
 int		do_be_dead(t_program *program);
 
+void	think_while_grabbing_fork(t_philo *philo);
+void	eat_and_whash_dishes(t_philo *philo);
+void	sleep_philo(t_philo *philo);
+
 #endif

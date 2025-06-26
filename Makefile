@@ -27,6 +27,7 @@ SRC		= 	$(SRC_DIR)/philosopher.c \
 			$(SRC_DIR)/monitoring.c \
 			$(SRC_DIR)/philo_utils.c \
 			$(SRC_DIR)/input_check.c \
+			$(SRC_DIR)/eat_think_sleep.c \
 			$(UTILS_DIR)/ft_atoi.c \
 			$(UTILS_DIR)/time.c
 

@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/10 15:30:20 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/06/12 12:13:50 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_action(t_philo *philo, char *action, char *color)
 void	left_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->program->forks[philo->id]);
-	print_action(philo, "has taken a fork", COLOR_GREEN);
+	print_action(philo, "is armed now", COLOR_GREEN);
 }
 
 void	right_fork(t_philo *philo)
@@ -38,7 +38,7 @@ void	right_fork(t_philo *philo)
 		pthread_mutex_lock(&philo->program->forks[0]);
 	else
 		pthread_mutex_lock(&philo->program->forks[philo->id + 1]);
-	print_action(philo, "has taken a fork", COLOR_GREEN);
+	print_action(philo, "is armed now", COLOR_GREEN);
 }
 
 int	setup(char **argv, t_program *program)
