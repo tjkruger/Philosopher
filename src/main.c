@@ -44,10 +44,10 @@ int	join_threads(t_program *program, pthread_t threads[],
 
 void	setup_philo_struct(t_philo *philo, long time, t_program *program)
 {
-	philo->id = program->current_philos;
+	philo->name = program->current_philos;
 	philo->thread_create = time;
 	philo->program = program;
-	philo->last_eat = time;
+	philo->last_ate = time;
 	philo->eat_count = 0;
 }
 

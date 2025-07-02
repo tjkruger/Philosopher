@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:52 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/09 13:52:54 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:27:21 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	input_invalid(char argc, char **argv)
 
 void	unlock_after_end(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->program->forks[philo->id]);
-	if (philo->id == philo->program->number_of_philosophers - 1)
+	pthread_mutex_unlock(&philo->program->forks[philo->name]);
+	if (philo->name == philo->program->number_of_philosophers - 1)
 		pthread_mutex_unlock(&philo->program->forks[0]);
 	else
-		pthread_mutex_unlock(&philo->program->forks[philo->id + 1]);
+		pthread_mutex_unlock(&philo->program->forks[philo->name + 1]);
 }

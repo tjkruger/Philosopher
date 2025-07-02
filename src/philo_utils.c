@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/12 12:13:50 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:26:52 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@ void	print_action(t_philo *philo, char *action, char *color)
 	}
 	printf("%s%.0f %d %s%s\n", color,
 		get_converted_time(philo->thread_create),
-		philo->id + 1, action, COLOR_RESET);
+		philo->name + 1, action, COLOR_RESET);
 	pthread_mutex_unlock(philo->program->print_mutex);
 }
 
 void	left_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->program->forks[philo->id]);
-	print_action(philo, "is armed now", COLOR_GREEN);
+	pthread_mutex_lock(&philo->program->forks[philo->name]);
+	print_action(philo, "grabbed left fork", COLOR_GREEN);
 }
 
 void	right_fork(t_philo *philo)
 {
-	if (philo->id == philo->program->number_of_philosophers - 1)
+	if (philo->name == philo->program->number_of_philosophers - 1)
 		pthread_mutex_lock(&philo->program->forks[0]);
 	else
-		pthread_mutex_lock(&philo->program->forks[philo->id + 1]);
-	print_action(philo, "is armed now", COLOR_GREEN);
+		pthread_mutex_lock(&philo->program->forks[philo->name + 1]);
+	print_action(philo, "grabbed right fork", COLOR_GREEN);
 }
 
 int	setup(char **argv, t_program *program)

@@ -28,8 +28,8 @@ SRC		= 	$(SRC_DIR)/philosopher.c \
 			$(SRC_DIR)/philo_utils.c \
 			$(SRC_DIR)/input_check.c \
 			$(SRC_DIR)/eat_think_sleep.c \
-			$(UTILS_DIR)/ft_atoi.c \
-			$(UTILS_DIR)/tiktokmf.c
+			$(UTILS_DIR)/ft_advanced_atoi.c \
+			$(UTILS_DIR)/clock.c
 
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))

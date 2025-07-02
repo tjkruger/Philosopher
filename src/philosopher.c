@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/12 12:28:43 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/02 11:26:00 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	*philosopher(void *args)
 	if (philo->program->number_of_philosophers % 2 == 1)
 	{
 		if (philo->program->number_of_philosophers >= 100)
-			ft_usleep(philo->id % 50);
+			ft_usleep(philo->name % 50);
 		else
-			ft_usleep(philo->id % 20);
+			ft_usleep(philo->name % 20);
 	}
 	if (philo->program->number_of_philosophers == 1)
 	{
@@ -51,12 +51,12 @@ void	*philosopher(void *args)
 		print_action(philo, "died", COLOR_RED);
 		return (NULL);
 	}
-	pthread_mutex_init(&philo->last_eat_mutex, NULL);
+	pthread_mutex_init(&philo->last_ate_mutex, NULL);
 	pthread_mutex_init(&philo->eat_count_mutex, NULL);
-	if (philo->id % 2 == 0)
+	if (philo->name % 2 == 0)
 		ft_usleep(philo->program->time_to_eat);
 	philo_loop(philo);
-	pthread_mutex_destroy(&philo->last_eat_mutex);
+	pthread_mutex_destroy(&philo->last_ate_mutex);
 	pthread_mutex_destroy(&philo->eat_count_mutex);
 	return (NULL);
 }
