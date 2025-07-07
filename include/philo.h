@@ -71,7 +71,7 @@ int		is_number(const char *nptr);
 int		do_be_dead(t_process *process);
 
 void	think_while_grabbing_fork(t_philo *philo);
-void	eat_and_whash_dishes(t_philo *philo);
+void	eating(t_philo *philo);
 void	sleep_philo(t_philo *philo);
 int		spawn_philo_fr(t_process *process, pthread_t *threads, long time);
 

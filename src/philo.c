@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.c                                      :+:      :+:    :+:   */
+/*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/07 13:45:40 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:03:21 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	philo_loop(t_philo *philo)
 		think_while_grabbing_fork(philo);
 		if (do_be_dead(philo->process) == 1)
 			break ;
-		eat_and_whash_dishes(philo);
+		eating(philo);
 		if (do_be_dead(philo->process) == 1)
 			break ;
 		if (philo->process->must_eat_count != -1

@@ -6,13 +6,13 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:26:42 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/07 13:59:09 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 15:06:11 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	eat_and_whash_dishes(t_philo *philo)
+void	eating(t_philo *philo)
 {
 	print_action(philo, "is eating");
 	ft_usleep(philo->process->time_to_eat);
@@ -37,7 +37,7 @@ void	sleep_philo(t_philo *philo)
 
 void	think_while_grabbing_fork(t_philo *philo)
 {
-	print_action(philo, "is thinking");
+	print_action(philo, "i deenke");
 	if (philo->name % 2 != 0)
 	{
 		left_fork(philo);

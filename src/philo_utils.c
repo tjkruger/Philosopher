@@ -6,16 +6,31 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/07 13:47:10 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 14:14:51 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}
+
 void	print_action(t_philo *philo, char *action)
 {
 	pthread_mutex_lock(philo->process->print_mutex);
-	if (do_be_dead(philo->process) == 1)
+	if (do_be_dead(philo->process) == 1 && ft_strcmp(action, "died") != 0)
 	{
 		pthread_mutex_unlock(philo->process->print_mutex);
 		return ;
@@ -25,6 +40,7 @@ void	print_action(t_philo *philo, char *action)
 		philo->name + 1, action);
 	pthread_mutex_unlock(philo->process->print_mutex);
 }
+
 
 void	left_fork(t_philo *philo)
 {
