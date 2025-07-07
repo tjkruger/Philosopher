@@ -12,40 +12,40 @@
 
 #include "../include/philo.h"
 
-int	everyone_ate(t_program *program)
+int	everyone_ate(t_process *process)
 {
 	int	i;
 	int	eat_count;
 
 	i = 0;
-	if (program->must_eat_count == -1)
+	if (process->must_eat_count == -1)
 		return (0);
-	while (i < program->current_philos)
+	while (i < process->current_philos)
 	{
-		pthread_mutex_lock(&program->philos[i].eat_count_mutex);
-		eat_count = program->philos[i].eat_count;
-		pthread_mutex_unlock(&program->philos[i].eat_count_mutex);
-		if (eat_count < program->must_eat_count)
+		pthread_mutex_lock(&process->philos[i].eat_count_mutex);
+		eat_count = process->philos[i].eat_count;
+		pthread_mutex_unlock(&process->philos[i].eat_count_mutex);
+		if (eat_count < process->must_eat_count)
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-void	set_dead(t_program *program)
+void	set_dead(t_process *process)
 {
-	pthread_mutex_lock(program->dead_mutex);
-	program->dead = 1;
-	pthread_mutex_unlock(program->dead_mutex);
+	pthread_mutex_lock(process->dead_mutex);
+	process->dead = 1;
+	pthread_mutex_unlock(process->dead_mutex);
 }
 
-int	do_be_dead(t_program *program)
+int	do_be_dead(t_process *process)
 {
 	int	dead;
 
-	pthread_mutex_lock(program->dead_mutex);
-	dead = program->dead;
-	pthread_mutex_unlock(program->dead_mutex);
+	pthread_mutex_lock(process->dead_mutex);
+	dead = process->dead;
+	pthread_mutex_unlock(process->dead_mutex);
 	return (dead);
 }
 
@@ -63,27 +63,27 @@ void	*monitor(void *args)
 {
 	int			i;
 	long		last_eat;
-	t_program	*program;
+	t_process	*process;
 	long		time;
 
-	program = (t_program *)args;
-	while (program->dead == 0 && program->number_of_philosophers > 1
-		&& !everyone_ate(program))
+	process = (t_process *)args;
+	while (process->dead == 0 && process->number_of_philosophers > 1
+		&& !everyone_ate(process))
 	{
 		i = -1;
-		while (++i < program->current_philos && program->dead == 0)
+		while (++i < process->current_philos && process->dead == 0)
 		{
 			time = get_current_time();
-			last_eat = get_last_eat(&program->philos[i]);
+			last_eat = get_last_eat(&process->philos[i]);
 			if (time - last_eat
-				>= program->philos[i].program->time_to_die)
+				>= process->philos[i].process->time_to_die)
 			{
-				print_action(&program->philos[i], "died");
-				set_dead(program);
+				print_action(&process->philos[i], "died");
+				set_dead(process);
 				return (NULL);
 			}
 		}
 	}
-	set_dead(program);
+	set_dead(process);
 	return (NULL);
 }

@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_check.c                                      :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:52 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/07 13:29:39 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:49:50 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	input_invalid(char argc, char **argv)
+int		wrong_input(char argc, char **argv)
 {
-	if (argc < 5 || argc > 6 || !is_all_numbers(argv))
+	if (argc < 5 || argc > 6 || !is_really_a_number(argv))
 	{
-		printf("Usage: ./philo number_of_philosophers time_to_die \
-		time_to_eat time_to_sleep  \
+		printf("Usage: ./philo num_of_philoso time_to_die \
+		time_to_eat time_to_sleep \
 		[number_of_times_each_philosopher_must_eat\n"
 			);
 		return (1);
 	}
-	if (ft_atoi(argv[1]) > PTHREAD_THREADS_MAX)
+	if (ft_atoi(argv[1]) > MAX_THREADS)
 	{
-		printf("There must be less then or equal %d philos\n",
-			 PTHREAD_THREADS_MAX);
+		printf("NUmber of philos must be lower or equal to %d\n",
+			 MAX_THREADS);
 		return (1);
 	}
 	return (0);
@@ -33,9 +33,9 @@ int	input_invalid(char argc, char **argv)
 
 void	unlock_after_end(t_philo *philo)
 {
-	pthread_mutex_unlock(&philo->program->forks[philo->name]);
-	if (philo->name == philo->program->number_of_philosophers - 1)
-		pthread_mutex_unlock(&philo->program->forks[0]);
+	pthread_mutex_unlock(&philo->process->forks[philo->name]);
+	if (philo->name == philo->process->number_of_philosophers - 1)
+		pthread_mutex_unlock(&philo->process->forks[0]);
 	else
-		pthread_mutex_unlock(&philo->program->forks[philo->name + 1]);
+		pthread_mutex_unlock(&philo->process->forks[philo->name + 1]);
 }

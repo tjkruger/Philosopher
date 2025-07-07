@@ -13,7 +13,7 @@
 #include "../include/philo.h"
 #include <pthread.h>
 
-int	is_all_numbers(char **args)
+int	is_really_a_number(char **args)
 {
 	int	i;
 
@@ -26,70 +26,59 @@ int	is_all_numbers(char **args)
 	return (1);
 }
 
-int	join_threads(t_program *program, pthread_t threads[],
-	pthread_t monitor_thread, int amount)
+int	join_threads(t_process *process, pthread_t threads[],
+	pthread_t monitor_thread, int number_of_threads)
 {
-	if (amount != program->number_of_philosophers)
+	if (number_of_threads != process->number_of_philosophers)
 	{
-		while (--amount >= 0)
-			pthread_join(threads[amount], NULL);
+		while (--number_of_threads >= 0)
+			pthread_join(threads[number_of_threads], NULL);
 		pthread_join(monitor_thread, NULL);
 		return (1);
 	}
-	while (--amount >= 0)
-		pthread_join(threads[amount], NULL);
+	while (--number_of_threads >= 0)
+		pthread_join(threads[number_of_threads], NULL);
 	pthread_join(monitor_thread, NULL);
 	return (0);
 }
 
-void	setup_philo_struct(t_philo *philo, long time, t_program *program)
+int	spawn_philos(t_process *process)
 {
-	philo->name = program->current_philos;
-	philo->thread_create = time;
-	philo->program = program;
-	philo->last_ate = time;
-	philo->eat_count = 0;
-}
-
-
-
-int	spawn_philos(t_program *program)
-{
-	pthread_t	threads[PTHREAD_THREADS_MAX - 1];
+	pthread_t	threads[MAX_THREADS - 1];
 	pthread_t	monitor_thread;
 	long		time;
 
-	program->current_philos = 0;
-	program->philos = malloc(sizeof(t_philo) * program->number_of_philosophers);
-	if (!program->philos)
+	process->current_philos = 0;
+	process->philos = malloc(sizeof(t_philo) * process->number_of_philosophers);
+	if (!process->philos)
 		return (1);
 	time = get_current_time();
-	if (spawn_philo_fr(program, threads, time) != 0)
+	if (spawn_philo_fr(process, threads, time) != 0)
 		return (1);
-	pthread_create(&monitor_thread, NULL, &monitor, program);
-	return (join_threads(program, threads, monitor_thread,
-			program->current_philos));
+	pthread_create(&monitor_thread, NULL, &monitor, process);
+	return (join_threads(process, threads, monitor_thread,
+			process->current_philos));
 }
 
 int	main(int argc, char **argv)
 {
-	t_program	*program;
+	t_process	*process;
 	int			i;
 	int			return_value;
 
 	i = -1;
-	if (input_invalid(argc, argv))
+	if (wrong_input(argc, argv))
 		return (1);
-	program = malloc(sizeof(t_program));
-	if (setup(argv, program))
+	process = malloc(sizeof(t_process));
+	if (setup(argv, process))
 		return (1);
-	while (++i < program->number_of_philosophers)
-		pthread_mutex_init(&program->forks[i], NULL);
+	while (++i < process->number_of_philosophers)
+		pthread_mutex_init(&process->forks[i], NULL);
 	if (argc == 6)
-		program->must_eat_count = ft_atoi(argv[5]);
+		process->must_eat_count = ft_atoi(argv[5]);
 	else
-		program->must_eat_count = -1;
-	return_value = spawn_philos(program);
-	destroy(program, i);
+		process->must_eat_count = -1;
+	return_value = spawn_philos(process);
+	destroy(process, i);
 	return (return_value);
 }

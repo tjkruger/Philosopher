@@ -19,7 +19,7 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-# define PTHREAD_THREADS_MAX 200
+# define MAX_THREADS 200
 # define SECOND 1000000
 
 typedef struct s_philo
@@ -30,10 +30,10 @@ typedef struct s_philo
 	long				last_ate;
 	pthread_mutex_t		eat_count_mutex;
 	pthread_mutex_t		last_ate_mutex;
-	struct s_program	*program;
+	struct s_process	*process;
 }				t_philo;
 
-typedef struct s_program
+typedef struct s_process
 {
 	int				number_of_philosophers;
 	int				current_philos;
@@ -46,7 +46,7 @@ typedef struct s_program
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*dead_mutex;
 	t_philo			*philos;
-}				t_program;
+}				t_process;
 
 void	*philosopher(void *args);
 void	*monitor(void *args);
@@ -55,25 +55,24 @@ void	print_action(t_philo *philo, char *action);
 void	left_fork(t_philo *philo);
 void	right_fork(t_philo *philo);
 
-void	destroy(t_program *program, int i);
-int		setup(char **argv, t_program *program);
-int		is_all_numbers(char **args);
-int		input_invalid(char argc, char **argv);
-int		make_dead_mutex(t_program *program);
+void	destroy(t_process *process, int i);
+int		setup(char **argv, t_process *process);
+int		is_really_a_number(char **args);
+int		wrong_input(char argc, char **argv);
+int		make_dead_mutex(t_process *process);
 
 void	unlock_after_end(t_philo *philo);
-void	setup_philo_struct(t_philo *philo, long time, t_program *program);
 
 int		ft_atoi(const char *nptr);
 long	get_current_time(void);
 int		ft_usleep(int time_in_ms);
 float	get_converted_time(long start);
 int		is_number(const char *nptr);
-int		do_be_dead(t_program *program);
+int		do_be_dead(t_process *process);
 
 void	think_while_grabbing_fork(t_philo *philo);
 void	eat_and_whash_dishes(t_philo *philo);
 void	sleep_philo(t_philo *philo);
-int		spawn_philo_fr(t_program *program, pthread_t *threads, long time);
+int		spawn_philo_fr(t_process *process, pthread_t *threads, long time);
 
 #endif

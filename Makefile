@@ -22,11 +22,11 @@ UTILS_DIR = ./utils
 PRINTF_DIR = ./printf
 OBJ_DIR = ./obj
 
-SRC		= 	$(SRC_DIR)/philosopher.c \
+SRC		= 	$(SRC_DIR)/philo.c \
 			$(SRC_DIR)/main.c \
 			$(SRC_DIR)/monitoring.c \
 			$(SRC_DIR)/philo_utils.c \
-			$(SRC_DIR)/input_check.c \
+			$(SRC_DIR)/check_input.c \
 			$(SRC_DIR)/eat_think_sleep.c \
 			$(UTILS_DIR)/ft_advanced_atoi.c \
 			$(UTILS_DIR)/clock.c

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   clock.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:51:50 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/12 14:29:05 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:47:30 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ float	get_converted_time(long start)
 	return ((float)(get_current_time() - start));
 }
 
-int	make_dead_mutex(t_program *program)
+int	make_dead_mutex(t_process *process)
 {
-	program->dead_mutex = malloc(sizeof(pthread_mutex_t));
-	if (!program->dead_mutex)
+	process->dead_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!process->dead_mutex)
 	{
-		free(program->forks);
-		free(program->print_mutex);
-		free(program);
+		free(process->forks);
+		free(process->print_mutex);
+		free(process);
 		return (1);
 	}
-	pthread_mutex_init(program->dead_mutex, NULL);
+	pthread_mutex_init(process->dead_mutex, NULL);
 	return (0);
 }
