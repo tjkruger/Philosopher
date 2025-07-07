@@ -19,8 +19,6 @@
 # include <unistd.h>
 # include <sys/time.h>
 
-# include "colors.h"
-
 # define PTHREAD_THREADS_MAX 200
 # define SECOND 1000000
 
@@ -53,7 +51,7 @@ typedef struct s_program
 void	*philosopher(void *args);
 void	*monitor(void *args);
 
-void	print_action(t_philo *philo, char *action, char *color);
+void	print_action(t_philo *philo, char *action);
 void	left_fork(t_philo *philo);
 void	right_fork(t_philo *philo);
 

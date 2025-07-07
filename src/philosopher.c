@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/02 11:26:00 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:31:57 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	*philosopher(void *args)
 	}
 	if (philo->program->number_of_philosophers == 1)
 	{
-		print_action(philo, "is thinking", COLOR_CYAN);
+		print_action(philo, "is thinking");
 		ft_usleep(philo->program->time_to_die);
-		print_action(philo, "died", COLOR_RED);
+		print_action(philo, "died");
 		return (NULL);
 	}
 	pthread_mutex_init(&philo->last_ate_mutex, NULL);

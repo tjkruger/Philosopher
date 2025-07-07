@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 12:26:42 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/02 11:27:55 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:22:03 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	eat_and_whash_dishes(t_philo *philo)
 {
-	print_action(philo, "is eating", COLOR_MAGENTA);
+	print_action(philo, "is eating");
 	ft_usleep(philo->program->time_to_eat);
 	pthread_mutex_unlock(&philo->program->forks[philo->name]);
 	if (philo->name == philo->program->number_of_philosophers - 1)
@@ -31,14 +31,14 @@ void	eat_and_whash_dishes(t_philo *philo)
 
 void	sleep_philo(t_philo *philo)
 {
-	print_action(philo, "is sleeping", COLOR_YELLOW);
+	print_action(philo, "is sleeping");
 	ft_usleep(philo->program->time_to_sleep);
 }
 
 void	think_while_grabbing_fork(t_philo *philo)
 {
-	print_action(philo, "is thinking", COLOR_CYAN);
-	if (philo->name % 2 == 0)
+	print_action(philo, "is thinking");
+	if (philo->name % 2 != 0)
 	{
 		left_fork(philo);
 		right_fork(philo);

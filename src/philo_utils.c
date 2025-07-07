@@ -6,13 +6,13 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/02 11:26:52 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:31:10 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	print_action(t_philo *philo, char *action, char *color)
+void	print_action(t_philo *philo, char *action)
 {
 	pthread_mutex_lock(philo->program->print_mutex);
 	if (do_be_dead(philo->program) == 1)
@@ -20,16 +20,16 @@ void	print_action(t_philo *philo, char *action, char *color)
 		pthread_mutex_unlock(philo->program->print_mutex);
 		return ;
 	}
-	printf("%s%.0f %d %s%s\n", color,
+	printf("%.0f %d %s\n",
 		get_converted_time(philo->thread_create),
-		philo->name + 1, action, COLOR_RESET);
+		philo->name + 1, action);
 	pthread_mutex_unlock(philo->program->print_mutex);
 }
 
 void	left_fork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->program->forks[philo->name]);
-	print_action(philo, "grabbed left fork", COLOR_GREEN);
+	print_action(philo, "grabbed left fork");
 }
 
 void	right_fork(t_philo *philo)
@@ -38,7 +38,7 @@ void	right_fork(t_philo *philo)
 		pthread_mutex_lock(&philo->program->forks[0]);
 	else
 		pthread_mutex_lock(&philo->program->forks[philo->name + 1]);
-	print_action(philo, "grabbed right fork", COLOR_GREEN);
+	print_action(philo, "grabbed right fork");
 }
 
 int	setup(char **argv, t_program *program)

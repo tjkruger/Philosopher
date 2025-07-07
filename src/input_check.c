@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:52 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/02 11:27:21 by tjkruger         ###   ########.fr       */
+/*   Updated: 2025/07/07 13:29:39 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ int	input_invalid(char argc, char **argv)
 {
 	if (argc < 5 || argc > 6 || !is_all_numbers(argv))
 	{
-		printf("%sUsage: ./philo number_of_philosophers time_to_die \
+		printf("Usage: ./philo number_of_philosophers time_to_die \
 		time_to_eat time_to_sleep  \
-		[number_of_times_each_philosopher_must_eat%s\n",
-			COLOR_RED, COLOR_RESET);
+		[number_of_times_each_philosopher_must_eat\n"
+			);
 		return (1);
 	}
 	if (ft_atoi(argv[1]) > PTHREAD_THREADS_MAX)
 	{
-		printf("%sThere must be less then or equal %d philos%s\n",
-			COLOR_RED, PTHREAD_THREADS_MAX, COLOR_RESET);
+		printf("There must be less then or equal %d philos\n",
+			 PTHREAD_THREADS_MAX);
 		return (1);
 	}
 	return (0);

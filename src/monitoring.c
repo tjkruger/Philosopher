@@ -78,7 +78,7 @@ void	*monitor(void *args)
 			if (time - last_eat
 				>= program->philos[i].program->time_to_die)
 			{
-				print_action(&program->philos[i], "died", COLOR_RED);
+				print_action(&program->philos[i], "died");
 				set_dead(program);
 				return (NULL);
 			}
