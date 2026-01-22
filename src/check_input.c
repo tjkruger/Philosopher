@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:52 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/07 13:49:50 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:09:02 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,13 @@ int		wrong_input(char argc, char **argv)
 	if (ft_atoi(argv[1]) > MAX_THREADS)
 	{
 		printf("NUmber of philos must be lower or equal to %d\n",
-			 MAX_THREADS);
+			MAX_THREADS);
 		return (1);
 	}
 	return (0);
 }
 
+//lol comment
 void	unlock_after_end(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->process->forks[philo->name]);
