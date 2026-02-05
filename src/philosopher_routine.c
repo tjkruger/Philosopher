@@ -1,61 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   philosopher_routine.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/07 14:03:21 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-#include <pthread.h>
-#include <stdlib.h>
-#include <unistd.h>
 
-void	philo_loop(t_philo *philo)
+void	philosopher_cycle(t_philo *philo)
 {
-	while (do_be_dead(philo->process) == 0)
+	while (is_simulation_over(philo->process) == 0)
 	{
-		think_while_grabbing_fork(philo);
-		if (do_be_dead(philo->process) == 1)
+		philo_think_and_take_forks(philo);
+		if (is_simulation_over(philo->process) == 1)
+		{
+			release_both_forks(philo);
 			break ;
-		eating(philo);
-		if (do_be_dead(philo->process) == 1)
+		}
+		philo_eat(philo);
+		if (is_simulation_over(philo->process) == 1)
 			break ;
 		if (philo->process->must_eat_count != -1
 			&& philo->eat_count >= philo->process->must_eat_count)
 			break ;
-		sleep_philo(philo);
+		philo_sleep(philo);
 	}
 }
 
-void	*philosopher(void *args)
+void	*philosopher_routine(void *args)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
-	if (philo->process->number_of_philosophers % 2 == 1)
+	if (philo->process->cur_num_of_philos % 2 == 1)
 	{
-		if (philo->process->number_of_philosophers >= 100)
+		if (philo->process->cur_num_of_philos >= 100)
 			ft_usleep(philo->name % 50);
 		else
 			ft_usleep(philo->name % 20);
 	}
-	if (philo->process->number_of_philosophers == 1)
+	if (philo->process->cur_num_of_philos == 1)
 	{
-		print_action(philo, "is thinking");
-		ft_usleep(philo->process->time_to_die);
-		print_action(philo, "died");
+		print_status(philo, "is thinking");
+		ft_usleep(philo->process->die_time);
+		print_status(philo, "died");
 		return (NULL);
 	}
 	pthread_mutex_init(&philo->last_ate_mutex, NULL);
 	pthread_mutex_init(&philo->eat_count_mutex, NULL);
 	if (philo->name % 2 == 0)
-		ft_usleep(philo->process->time_to_eat);
-	philo_loop(philo);
+		ft_usleep(philo->process->eat_time);
+	philosopher_cycle(philo);
 	pthread_mutex_destroy(&philo->last_ate_mutex);
 	pthread_mutex_destroy(&philo->eat_count_mutex);
 	return (NULL);

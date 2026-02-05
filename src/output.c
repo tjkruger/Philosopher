@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 13:52:42 by tjkruger          #+#    #+#             */
+/*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
 /*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+void	print_status(t_philo *philo, char *status)
 {
-	t_process	*process;
-	int			i;
-	int			return_value;
-
-	i = -1;
-	if (validate_input(argc, argv))
-		return (1);
-	process = malloc(sizeof(t_process));
-	if (init_process(argv, process))
-		return (1);
-	while (++i < process->cur_num_of_philos)
-		pthread_mutex_init(&process->forks[i], NULL);
-	if (argc == 6)
-		process->must_eat_count = ft_atoi(argv[5]);
-	else
-		process->must_eat_count = -1;
-	return_value = create_philosophers(process);
-	cleanup_process(process, i);
-	return (return_value);
+	pthread_mutex_lock(philo->process->printout_mutex);
+	if (is_simulation_over(philo->process) == 1
+		&& ft_strcmp(status, "died") != 0)
+	{
+		pthread_mutex_unlock(philo->process->printout_mutex);
+		return ;
+	}
+	printf("%.0f %d %s\n",
+		get_converted_time(philo->thread_create),
+		philo->name + 1, status);
+	pthread_mutex_unlock(philo->process->printout_mutex);
 }

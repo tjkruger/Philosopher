@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:53:11 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/06/09 13:53:11 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,44 +35,78 @@ typedef struct s_philo
 
 typedef struct s_process
 {
-	int				number_of_philosophers;
+	int				philo_num;
+	int				cur_num_of_philos;
 	int				current_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				must_eat_count;
 	int				dead;
-	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*printout_mutex;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*dead_mutex;
 	t_philo			*philos;
+	int				die_time;
+	int				eat_time;
+	int				sleep_time;
+	int				eat_count;
+	int				must_eat_count;
 }				t_process;
 
-void	*philosopher(void *args);
-void	*monitor(void *args);
 
-void	print_action(t_philo *philo, char *action);
-void	left_fork(t_philo *philo);
-void	right_fork(t_philo *philo);
 
-void	destroy(t_process *process, int i);
-int		setup(char **argv, t_process *process);
-int		is_really_a_number(char **args);
-int		wrong_input(char argc, char **argv);
-int		make_dead_mutex(t_process *process);
+int		init_process(char **argv, t_process *process);
+int		init_dead_mutex(t_process *process);
+void	cleanup_process(t_process *process, int fork_count);
 
-void	unlock_after_end(t_philo *philo);
+
+
+int		validate_input(char argc, char **argv);
+int		validate_all_numbers(char **args);
+
+
+int		create_philosophers(t_process *process);
+int		create_philosopher_threads(t_process *process, pthread_t *threads,
+			long time);
+int		join_all_threads(t_process *process, pthread_t threads[],
+			pthread_t monitor_thread, int thread_count);
+
+
+
+void	*philosopher_routine(void *args);
+void	philosopher_cycle(t_philo *philo);
+
+
+
+void	philo_think_and_take_forks(t_philo *philo);
+void	philo_eat(t_philo *philo);
+void	philo_sleep(t_philo *philo);
+
+
+
+void	take_left_fork(t_philo *philo);
+void	take_right_fork(t_philo *philo);
+void	release_both_forks(t_philo *philo);
+
+
+
+
+void	*monitor_routine(void *args);
+int		check_all_satisfied(t_process *process);
+int		is_simulation_over(t_process *process);
+void	set_simulation_over(t_process *process);
+
+
+
+long	get_last_meal_time(t_philo *philo);
+int		get_meal_count(t_philo *philo);
+
+
+void	print_status(t_philo *philo, char *status);
 
 int		ft_atoi(const char *nptr);
+int		ft_strcmp(const char *s1, const char *s2);
 long	get_current_time(void);
 int		ft_usleep(int time_in_ms);
 float	get_converted_time(long start);
 int		is_number(const char *nptr);
-int		do_be_dead(t_process *process);
-
-void	think_while_grabbing_fork(t_philo *philo);
-void	eating(t_philo *philo);
-void	sleep_philo(t_philo *philo);
-int		spawn_philo_fr(t_process *process, pthread_t *threads, long time);
+long	get_time(void);
 
 #endif

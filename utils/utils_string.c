@@ -1,36 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 13:52:42 by tjkruger          #+#    #+#             */
+/*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
 /*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_process	*process;
-	int			i;
-	int			return_value;
+	int	i;
 
-	i = -1;
-	if (validate_input(argc, argv))
-		return (1);
-	process = malloc(sizeof(t_process));
-	if (init_process(argv, process))
-		return (1);
-	while (++i < process->cur_num_of_philos)
-		pthread_mutex_init(&process->forks[i], NULL);
-	if (argc == 6)
-		process->must_eat_count = ft_atoi(argv[5]);
-	else
-		process->must_eat_count = -1;
-	return_value = create_philosophers(process);
-	cleanup_process(process, i);
-	return (return_value);
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}
+
+int	is_number(const char *nptr)
+{
+	int	i;
+
+	i = 0;
+	if (nptr[i] == '+' || nptr[i] == '-')
+		i++;
+	if (!nptr[i])
+		return (0);
+	while (nptr[i])
+	{
+		if (nptr[i] < '0' || nptr[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }

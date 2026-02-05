@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-long	get_current_time(void)
+long	get_time(void)
 {
 	struct timeval	time;
 
@@ -20,20 +20,24 @@ long	get_current_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
+float	get_converted_time(long start)
+{
+	long	current;
+
+	current = get_time();
+	return ((float)(current - start));
+}
+
 int	ft_usleep(int time_in_ms)
 {
 	long	start;
 
-	start = get_current_time();
-	while (get_current_time() - start < time_in_ms)
+	start = get_time();
+	while (get_time() - start < time_in_ms)
 		usleep(250);
 	return (1);
 }
 
-float	get_converted_time(long start)
-{
-	return ((float)(get_current_time() - start));
-}
 
 int	make_dead_mutex(t_process *process)
 {
@@ -41,7 +45,7 @@ int	make_dead_mutex(t_process *process)
 	if (!process->dead_mutex)
 	{
 		free(process->forks);
-		free(process->print_mutex);
+		free(process->printout_mutex);
 		free(process);
 		return (1);
 	}

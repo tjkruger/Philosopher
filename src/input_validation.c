@@ -1,36 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   input_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/09 13:52:42 by tjkruger          #+#    #+#             */
+/*   Created: 2025/06/09 13:52:52 by tjkruger          #+#    #+#             */
 /*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+int	validate_all_numbers(char **args)
 {
-	t_process	*process;
-	int			i;
-	int			return_value;
+	int	i;
 
-	i = -1;
-	if (validate_input(argc, argv))
+	i = 0;
+	while (args[++i])
+	{
+		if (!is_number(args[i]))
+			return (0);
+	}
+	return (1);
+}
+
+int	validate_input(char argc, char **argv)
+{
+	if (argc < 5 || argc > 6 || !validate_all_numbers(argv))
+	{
+		printf("Usage: ./philo <num_of_philos> <time_to_die> ");
+		printf("<time_to_eat> <time_to_sleep> [times_must_eat]\n");
 		return (1);
-	process = malloc(sizeof(t_process));
-	if (init_process(argv, process))
+	}
+	if (ft_atoi(argv[1]) > MAX_THREADS)
+	{
+		printf("Number of philos must be lower or equal to %d\n",
+			MAX_THREADS);
 		return (1);
-	while (++i < process->cur_num_of_philos)
-		pthread_mutex_init(&process->forks[i], NULL);
-	if (argc == 6)
-		process->must_eat_count = ft_atoi(argv[5]);
-	else
-		process->must_eat_count = -1;
-	return_value = create_philosophers(process);
-	cleanup_process(process, i);
-	return (return_value);
+	}
+	return (0);
 }
