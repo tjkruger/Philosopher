@@ -55,6 +55,14 @@ int	init_process(char **argv, t_process *process)
 
 void	cleanup_process(t_process *process, int fork_count)
 {
+	int	i;
+
+	i = -1;
+	while (++i < process->cur_num_of_philos)
+	{
+		pthread_mutex_destroy(&process->philos[i].last_ate_mutex);
+		pthread_mutex_destroy(&process->philos[i].eat_count_mutex);
+	}
 	while (--fork_count >= 0)
 		pthread_mutex_destroy(&process->forks[fork_count]);
 	pthread_mutex_destroy(process->printout_mutex);

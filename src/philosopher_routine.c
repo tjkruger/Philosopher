@@ -51,12 +51,8 @@ void	*philosopher_routine(void *args)
 		print_status(philo, "died");
 		return (NULL);
 	}
-	pthread_mutex_init(&philo->last_ate_mutex, NULL);
-	pthread_mutex_init(&philo->eat_count_mutex, NULL);
 	if (philo->name % 2 == 0)
 		ft_usleep(philo->process->eat_time);
 	philosopher_cycle(philo);
-	pthread_mutex_destroy(&philo->last_ate_mutex);
-	pthread_mutex_destroy(&philo->eat_count_mutex);
 	return (NULL);
 }

@@ -16,16 +16,24 @@ int	create_philosopher_threads(t_process *process, pthread_t *threads,
 		long time)
 {
 	t_philo	*philo;
+	int		i;
 
-	while (process->current_philos < process->cur_num_of_philos
-		&& process->current_philos < MAX_THREADS - 1)
+	i = -1;
+	while (++i < process->cur_num_of_philos)
 	{
-		philo = &process->philos[process->current_philos];
-		philo->name = process->current_philos;
+		philo = &process->philos[i];
+		philo->name = i;
 		philo->thread_create = time;
 		philo->process = process;
 		philo->last_ate = time;
 		philo->eat_count = 0;
+		pthread_mutex_init(&philo->last_ate_mutex, NULL);
+		pthread_mutex_init(&philo->eat_count_mutex, NULL);
+	}
+	while (process->current_philos < process->cur_num_of_philos
+		&& process->current_philos < MAX_THREADS - 1)
+	{
+		philo = &process->philos[process->current_philos];
 		if (pthread_create(&threads[process->current_philos],
 				NULL, &philosopher_routine, philo) != 0)
 			return (1);
@@ -55,6 +63,7 @@ int	create_philosophers(t_process *process)
 	pthread_t	threads[MAX_THREADS - 1];
 	pthread_t	monitor_thread;
 	long		time;
+	int			i;
 
 	process->current_philos = 0;
 	process->philos = malloc(sizeof(t_philo) * process->cur_num_of_philos);
@@ -62,8 +71,19 @@ int	create_philosophers(t_process *process)
 		return (1);
 	time = get_time();
 	if (create_philosopher_threads(process, threads, time) != 0)
+	{
+		i = process->current_philos;
+		while (--i >= 0)
+			pthread_join(threads[i], NULL);
 		return (1);
-	pthread_create(&monitor_thread, NULL, &monitor_routine, process);
+	}
+	if (pthread_create(&monitor_thread, NULL, &monitor_routine, process) != 0)
+	{
+		i = process->current_philos;
+		while (--i >= 0)
+			pthread_join(threads[i], NULL);
+		return (1);
+	}
 	return (join_all_threads(process, threads, monitor_thread,
 			process->current_philos));
 }
