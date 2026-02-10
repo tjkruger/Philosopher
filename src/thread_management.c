@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:42 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:13:47 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	join_all_threads(t_process *process, pthread_t threads[],
 int	create_philosophers(t_process *process)
 {
 	pthread_t	threads[MAX_THREADS - 1];
-	pthread_t	monitor_thread;
+	pthread_t	mt;
 	long		time;
 	int			i;
 
@@ -77,13 +77,12 @@ int	create_philosophers(t_process *process)
 			pthread_join(threads[i], NULL);
 		return (1);
 	}
-	if (pthread_create(&monitor_thread, NULL, &monitor_routine, process) != 0)
+	if (pthread_create(&mt, NULL, &monitor_routine, process) != 0)
 	{
 		i = process->current_philos;
 		while (--i >= 0)
 			pthread_join(threads[i], NULL);
 		return (1);
 	}
-	return (join_all_threads(process, threads, monitor_thread,
-			process->current_philos));
+	return (join_all_threads(process, threads, mt, process->current_philos));
 }

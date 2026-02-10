@@ -54,4 +54,3 @@ int	ft_atoi(const char *nptr)
 		return (0);
 	return (get_num(nptr, i) * prefix);
 }
-

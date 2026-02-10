@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:35 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/02/10 16:26:03 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:11:33 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,26 @@ void	*monitor_routine(void *args)
 {
 	int			i;
 	long		last_meal;
-	t_process	*process;
+	t_process	*prcs;
 	long		current_time;
 
-	process = (t_process *)args;
-	while (process->dead == 0 && process->cur_num_of_philos > 1
-		&& !check_all_satisfied(process))
+	prcs = (t_process *)args;
+	while (prcs->dead == 0 && prcs->cur_num_of_philos > 1
+		&& !check_all_satisfied(prcs))
 	{
 		i = -1;
-		while (++i < process->current_philos && process->dead == 0)
+		while (++i < prcs->current_philos && prcs->dead == 0)
 		{
-            last_meal = get_last_meal_time(&process->philos[i]);
-        	current_time = get_time();
-
-			if (current_time - last_meal >= process->philos[i].process->die_time)
+			last_meal = get_last_meal_time(&prcs->philos[i]);
+			current_time = get_time();
+			if (current_time - last_meal >= prcs->philos[i].process->die_time)
 			{
-				print_status(&process->philos[i], "died");
-				set_simulation_over(process);
+				print_status(&prcs->philos[i], "died");
+				set_simulation_over(prcs);
 				return (NULL);
 			}
 		}
 	}
-	set_simulation_over(process);
+	set_simulation_over(prcs);
 	return (NULL);
 }

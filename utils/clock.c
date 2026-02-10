@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:51:50 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/02/10 16:03:37 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:14:35 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	ft_usleep(int time_in_ms)
 		usleep(100);
 	return (1);
 }
-
 
 int	make_dead_mutex(t_process *process)
 {
