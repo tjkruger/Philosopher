@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:51:50 by tjkruger          #+#    #+#             */
-/*   Updated: 2025/07/07 13:47:30 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:03:37 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_usleep(int time_in_ms)
 
 	start = get_time();
 	while (get_time() - start < time_in_ms)
-		usleep(250);
+		usleep(100);
 	return (1);
 }
 

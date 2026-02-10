@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:18:21 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	*philosopher_routine(void *args)
 	if (philo->process->cur_num_of_philos % 2 == 1)
 	{
 		if (philo->process->cur_num_of_philos >= 100)
-			ft_usleep(philo->name % 50);
+			usleep(philo->name % 50);
 		else
-			ft_usleep(philo->name % 20);
+			usleep(philo->name % 20);
 	}
 	if (philo->process->cur_num_of_philos == 1)
 	{
@@ -52,7 +52,7 @@ void	*philosopher_routine(void *args)
 		return (NULL);
 	}
 	if (philo->name % 2 == 0)
-		ft_usleep(philo->process->eat_time);
+		ft_usleep(philo->process->eat_time / 2);
 	philosopher_cycle(philo);
 	return (NULL);
 }

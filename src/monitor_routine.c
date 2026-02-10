@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:35 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/02/05 14:30:00 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:26:03 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ void	*monitor_routine(void *args)
 		i = -1;
 		while (++i < process->current_philos && process->dead == 0)
 		{
-			current_time = get_time();
-			last_meal = get_last_meal_time(&process->philos[i]);
+            last_meal = get_last_meal_time(&process->philos[i]);
+        	current_time = get_time();
+
 			if (current_time - last_meal >= process->philos[i].process->die_time)
 			{
 				print_status(&process->philos[i], "died");
