@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 13:52:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/02/10 17:09:13 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/02/10 17:38:29 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,24 @@ int	init_dead_mutex(t_process *process)
 	return (0);
 }
 
+int	validate_ttd(int ttd, int other_time)
+{
+	int	new;
+
+	new = ttd;
+	if (ttd >= other_time)
+		return (other_time);
+	return (new);
+}
+
 int	init_process(char **argv, t_process *process)
 {
 	if (!process)
 		return (1);
 	process->cur_num_of_philos = ft_atoi(argv[1]);
 	process->die_time = ft_atoi(argv[2]);
-	process->eat_time = ft_atoi(argv[3]);
-	process->sleep_time = ft_atoi(argv[4]);
+	process->eat_time = validate_ttd(process->die_time, ft_atoi(argv[3]));
+	process->sleep_time = validate_ttd(process->die_time, ft_atoi(argv[4]));
 	process->dead = 0;
 	process->forks = malloc(sizeof(pthread_mutex_t)
 			* process->cur_num_of_philos);
